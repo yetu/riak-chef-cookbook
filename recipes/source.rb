@@ -50,9 +50,11 @@ pam_packages = value_for_platform_family(
   %w(rhel fedora)  => ['pam-devel', 'openssl-devel']
 )
 
-pam_packages.each do |pam_package|
-  package pam_package do
-    action :install
+unless node['platform_family'] == 'smartos'
+  pam_packages.each do |pam_package|
+    package pam_package do
+      action :install
+    end
   end
 end
 

@@ -34,8 +34,8 @@ node.default['sysctl']['params']['net']['ipv4']['tcp_tw_reuse'] = node['riak']['
 node.default['sysctl']['params']['net']['ipv4']['tcp_moderate_rcvbuf'] = node['riak']['sysctl']['net']['ipv4']['tcp_moderate_rcvbuf']
 
 include_recipe 'ulimit' unless node['platform_family'] == 'debian'
-include_recipe 'sysctl'
-include_recipe 'java'
+include_recipe 'sysctl' unless node['platform_family'] == 'smartos'
+include_recipe 'java' unless node['platform_family'] == 'smartos'
 
 if node['riak']['package']['enterprise_key'].empty?
   include_recipe "riak::#{node['riak']['install_method']}"

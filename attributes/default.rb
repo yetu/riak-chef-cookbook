@@ -16,7 +16,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-default['riak']['install_method'] = 'package'
+if node.platform_family?('smartos')
+  default['riak']['install_method'] = 'source'
+else
+  default['riak']['install_method'] = 'package'
+end
 
 # ulimit
 default['riak']['limits']['nofile'] = 65_536

@@ -80,5 +80,4 @@ else
       action :install
       version package_version
     end
-  end
 end
