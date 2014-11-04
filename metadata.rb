@@ -21,8 +21,18 @@ name              'riak-yetu'
 maintainer        'Basho Technologies, Inc.'
 maintainer_email  'riak@basho.com'
 license           'Apache 2.0'
-description       'Installs and configures Riak distributed data store'
-version           '3.0.1-yetu.1'
+description       'Installs and configures Riak distributed data store. Forked off of https://github.com/basho/riak-chef-cookbook 3.0.1'
+
+# This has been forked off of the base Basho repository version 3.0.1.
+# However, because of chef version number limitations we can't reflect
+# the original Basho cookbook version. That means that we can make
+# changes that bump up our version number to 3.0.2 but Basho can make
+# other changes that bump up THEIR version to 3.0.2. In that case,
+# when merging changes from upstream we would have to bump up our
+# version to 3.0.3 (which would correspond to upstream version 3.0.2)
+# There seems to be no way of reflecting this in the version number.
+
+version           '3.0.1'
 
 recipe            'riak', 'Installs Riak from a package'
 recipe            'riak::source', 'Installs Erlang and Riak from source'
