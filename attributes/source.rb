@@ -21,5 +21,6 @@ default['riak']['source']['version']['major'] = '2'
 default['riak']['source']['version']['minor'] = '0'
 default['riak']['source']['version']['incremental'] = '1'
 default['riak']['source']['prefix'] = '/opt'
+default['riak']['source']['erlang_install_method'] = 'source'
 
 default['riak']['source']['checksum'] = 'd02f550db12261a962fa0c3b5a320db09c2de180fc3a84b80f40b8494b0ce828'

@@ -43,18 +43,22 @@ node.default['riak']['config']['search']['root_dir'] = "#{node['riak']['platform
 
 include_recipe 'git'
 include_recipe 'build-essential'
-include_recipe 'erlang::source'
+
+if node.default['riak']['source']['erlang_install_method'] == 'source'
+  include_recipe 'erlang::source'
+else
+  include_recipe 'erlang::package'
+end
 
 pam_packages = value_for_platform_family(
   %w(debian ubuntu)  => ['libpam0g-dev', 'libssl-dev'],
-  %w(rhel fedora)  => ['pam-devel', 'openssl-devel']
+  %w(rhel fedora)  => ['pam-devel', 'openssl-devel'],
+  %w(smartos) => []
 )
 
-unless node['platform_family'] == 'smartos'
-  pam_packages.each do |pam_package|
-    package pam_package do
-      action :install
-    end
+pam_packages.each do |pam_package|
+  package pam_package do
+    action :install
   end
 end
 
@@ -64,14 +68,14 @@ source_file = "riak-#{source_version}.#{node['riak']['source']['version']['incre
 source_filename = "#{source_file}.tar.gz"
 
 group 'riak' do
-  system true
+  system true unless node['platform_family'] == 'smartos'
 end
 
 user 'riak' do
   gid 'riak'
   shell '/bin/bash'
   home node['riak']['platform_data_dir']
-  system true
+  system true unless node['platform_family'] == 'smartos'
 end
 
 remote_file "#{Chef::Config[:file_cache_path]}/#{source_filename}" do
